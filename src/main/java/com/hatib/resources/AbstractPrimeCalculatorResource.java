@@ -58,7 +58,7 @@ public abstract class AbstractPrimeCalculatorResource {
             logger.info(String.format("getPrime, primeCalculationResult = %s ", primeCalculationResult));
             return Response.ok(primeCalculationResult).build();
         } catch (Exception e) {
-            final String errMessage = String.format("Error when calculating primeNumberPosition = %d", primeNumberPosition);
+            final String errMessage = String.format("Error when calculating primeNumberPosition = %d, because %s", primeNumberPosition, e.getMessage());
             logger.error(errMessage, e);
             final ErrorMessage errorMessage = new ErrorMessage(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), errMessage);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).type(MediaType.APPLICATION_JSON_TYPE).build();
