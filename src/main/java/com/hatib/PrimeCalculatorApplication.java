@@ -2,6 +2,7 @@ package com.hatib;
 
 import com.codahale.metrics.health.jvm.ThreadDeadlockHealthCheck;
 import com.hatib.resources.naive.NaivePrimeCalculatorResource;
+import com.hatib.resources.sieve.SievePrimeCalculatorResource;
 import com.hatib.resources.skipevennumbers.SkipEvenNumbersCalculatorResource;
 import com.hatib.resources.squareroot.SquareRootPrimeCalculatorResource;
 import io.dropwizard.Application;
@@ -29,8 +30,7 @@ public class PrimeCalculatorApplication extends Application<PrimeCalculatorConfi
         environment.jersey().register(NaivePrimeCalculatorResource.class);
         environment.jersey().register(SkipEvenNumbersCalculatorResource.class);
         environment.jersey().register(SquareRootPrimeCalculatorResource.class);
+        environment.jersey().register(SievePrimeCalculatorResource.class);
         environment.healthChecks().register("deadlocks", new ThreadDeadlockHealthCheck());
-        System.out.println(environment.healthChecks().getNames());
-
     }
 }

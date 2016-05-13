@@ -14,6 +14,11 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Created by Hatib on 11/05/2016.
+ *
+ * asynchronously handles the calls received by the endpoints/resources and checks cache. if prime not in cache will calculate the prime.
+ *
+ * uses template pattern to facilitate the different ways the endpoints use to calculate the prime numbers
+ *
  */
 public abstract class AbstractPrimeCalculatorResource {
 
@@ -51,11 +56,12 @@ public abstract class AbstractPrimeCalculatorResource {
             long calculationTimeInMilliSecs = (DateTime.now().getMillis() - startTime);
             final PrimeCalculationResult primeCalculationResult = new PrimeCalculationResult(primeNumberPosition, result, calculationTimeInMilliSecs);
             logger.info(String.format("getPrime, primeCalculationResult = %s ", primeCalculationResult));
-            return Response.ok(primeCalculationResult, MediaType.APPLICATION_JSON_TYPE).build();
+            return Response.ok(primeCalculationResult).build();
         } catch (Exception e) {
-            String errMessage = String.format("Error when calculating primeNumberPosition = %d", primeNumberPosition);
+            final String errMessage = String.format("Error when calculating primeNumberPosition = %d", primeNumberPosition);
             logger.error(errMessage, e);
-            return Response.serverError().status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            final ErrorMessage errorMessage = new ErrorMessage(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), errMessage);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).type(MediaType.APPLICATION_JSON_TYPE).build();
         }
     }
 }

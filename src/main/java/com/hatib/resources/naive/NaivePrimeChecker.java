@@ -1,22 +1,25 @@
 package com.hatib.resources.naive;
 
-import com.hatib.resources.SkipEvenNumbersPPrimeChecker;
+import com.hatib.resources.PrimeChecker;
 
 import java.util.OptionalLong;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
 import java.util.stream.LongStream;
+
+import static com.hatib.resources.Constants.FIRST_PRIME;
+
 
 /**
  * Created by Hatib on 11/05/2016.
+ *
+ * Checks if number is prime by checking for divisors, from 1 to half the numbers size
  */
-public class NaivePrimeChecker implements SkipEvenNumbersPPrimeChecker {
+public class NaivePrimeChecker implements PrimeChecker {
 
     public boolean isPrime(long number)  {
-        if (number < 2) return false;
+        if (number < FIRST_PRIME) return false;
         try {
-            return !numberHasDivisors(number);
+            return numberHasNoDivisors(number);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
@@ -24,11 +27,8 @@ public class NaivePrimeChecker implements SkipEvenNumbersPPrimeChecker {
         }
     }
 
-    private boolean numberHasDivisors(long number) throws ExecutionException, InterruptedException {
-        final LongStream stream = LongStream.rangeClosed(2, number/2).parallel();
-        final Callable<OptionalLong> task = () -> stream.filter(no -> number % no == 0).findAny();
-        final ForkJoinPool forkJoinPool = new ForkJoinPool(4);
-        final OptionalLong optionalLong = forkJoinPool.submit(task).get();
-        return optionalLong.isPresent();
+    private boolean numberHasNoDivisors(long number) throws ExecutionException, InterruptedException {
+        final OptionalLong optionalLong = LongStream.rangeClosed(FIRST_PRIME, number/2).parallel().filter(no -> number % no == 0).findAny();
+        return !optionalLong.isPresent();
     }
 }

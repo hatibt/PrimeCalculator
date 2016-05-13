@@ -3,7 +3,7 @@ package com.hatib.resources.sieve;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Hatib on 11/05/2016.
+ * Created by Hatib on 13/05/2016.
  */
 public class SievePrimeCalculatorTest {
 

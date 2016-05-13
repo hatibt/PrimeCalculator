@@ -6,6 +6,12 @@ import java.util.stream.LongStream;
 
 /**
  * Created by Hatib on 11/05/2016.
+ *
+ * iterates through sequence of numbers filtering out prime numbers, with isPrime until the nth prime number is reached.
+ *
+ * isPrime check uses NaivePrimeChecker which checks if number is prime by checking for divisors, from 1 to half the numbers size
+
+ *
  */
 public class NaivePrimeCalculator  implements PrimeCalculator {
 
