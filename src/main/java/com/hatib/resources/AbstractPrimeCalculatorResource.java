@@ -53,8 +53,10 @@ public abstract class AbstractPrimeCalculatorResource {
         try {
             long startTime = DateTime.now().getMillis();
             final Long result = this.primesCache.get(primeNumberPosition);
+
             long calculationTimeInMilliSecs = (DateTime.now().getMillis() - startTime);
             final PrimeCalculationResult primeCalculationResult = new PrimeCalculationResult(primeNumberPosition, result, calculationTimeInMilliSecs);
+
             logger.info(String.format("getPrime, primeCalculationResult = %s ", primeCalculationResult));
             return Response.ok(primeCalculationResult).build();
         } catch (Exception e) {
