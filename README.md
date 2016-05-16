@@ -9,7 +9,7 @@ http://localhost:8080/primes/naive/calculate/11
 
 *This would return a json response,* `{"position":11,"primeNumber":31,"calculationTimeInMilliSecs":322} `
 
-To run please add `server primecalcultaor.yml` to the prgram arguments in your ide
+To run please add `server primecalculator.yml` to the prgram arguments in your ide
 
 *A description of all 4 Algorithims with links using the default port for drop wizard 8080 URLs follows:*
 
